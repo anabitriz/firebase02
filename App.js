@@ -26,7 +26,7 @@ const Stack = createNativeStackNavigator();
 
 
 
-function HomeScreen({ navigation }) {
+function Principal({ navigation }) {
   const [email, botarEmail] = React.useState('');
   const [senha, botarSenha] = React.useState('');
 
@@ -95,7 +95,7 @@ const errorMessage = error.message;
 function Cadastro({ navigation }) {
   const [email, botarEmail] = React.useState('');
   const [senha, botarSenha] = React.useState('');
-   const [titleText, setTitleText] = useState("teste");
+   const [titleText, setTitleText] = useState("");
    const onPressTitle = () => {
     setTitleText("testando");
   };
@@ -104,9 +104,9 @@ function Cadastro({ navigation }) {
   const auth = getAuth();
 createUserWithEmailAndPassword(auth, email, senha)
 .then((userCredential) => {
-// Signed in
-const user = userCredential.user;
-// ...
+  const user = userCredential.user;
+  alert("Usuário cadastrado!");
+  navigation.navigate("Home");
 })
 .catch((error) => {
 const errorCode = error.code;
@@ -116,9 +116,7 @@ const errorMessage = error.message;
 }
   return (
     <View style={styles.screen}>
-      
-  
-        navigation={navigation}
+
       
       <Text style={styles.label}>  Email</Text>
       <TextInput style={styles.input} value={email} onChangeText={botarEmail} />
@@ -156,10 +154,10 @@ export default function App() {
   }, []);
 
 useEffect(() => {
-    fetch('https://economia.awesomeapi.com.br/last/USD-BRL')
+    fetch('https://economia.awesomeapi.com.br/last/EUR-BRL')
       .then(response => response.json())
       .then(data => {
-        setDolar(data.USDBRL.bid); 
+        setEuro(data.EURBRL.bid); 
       })
       .catch(error => console.error(error));
   }, []);
@@ -167,7 +165,7 @@ useEffect(() => {
   
     <NavigationContainer>
       <Stack.Navigator screenOptions={{ headerShown: false }}>
-        <Stack.Screen name="Home" component={HomeScreen} />
+        <Stack.Screen name="Home" component={Principal} />
         <Stack.Screen name="Cadastrar" component={Cadastro} />
       </Stack.Navigator>
     </NavigationContainer>
